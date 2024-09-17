@@ -26,7 +26,7 @@ Content-Type: application/json
 
 {
     "StudentId": 4,
-    "Name": "João",
+    "Name": "Gabriel",
     "LastName": "Castro",
     "DateOfBirth": "1960-09-20",
     "Grade1": 16.5,
