@@ -1,0 +1,40 @@
+GET http://localhost:5075/api/students
+
+###
+
+GET http://localhost:5075/api/students/:id
+
+###
+
+POST http://localhost:5075/api/students
+Content-Type: application/json
+
+{
+    "Name": "Eduardo",
+    "LastName": "Mônico",
+    "DateOfBirth": "1988-09-20",
+    "Grade1": 18,
+    "Grade2": 28,
+    "InstitutionalGrade": 10,
+    "Activities": 10
+}
+
+###
+
+PUT http://localhost:5075/api/students
+Content-Type: application/json
+
+{
+    "StudentId": 4,
+    "Name": "João",
+    "LastName": "Castro",
+    "DateOfBirth": "1960-09-20",
+    "Grade1": 16.5,
+    "Grade2": 24,
+    "InstitutionalGrade": 10,
+    "Activities": 12
+}
+
+###
+
+DELETE http://localhost:5075/api/students/:id
