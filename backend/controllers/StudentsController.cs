@@ -33,11 +33,9 @@ namespace backend.Controllers
             return await _context.Students.ToListAsync();
         }
 
-        // Método GET para buscar um estudante pelo ID
         [HttpGet("{studentId}")]
         public async Task<ActionResult<Student>> GetById(int studentId)
         {
-            // Busca o estudante pelo ID no banco de dados
             Student student = await _context.Students.FindAsync(studentId);
 
             if (student == null) return NotFound();
