@@ -1,3 +1,17 @@
-<form class="form">
-    <p>form works!</p>
-</form>
+<div class="form-container">
+    <h1>Cadastre o aluno</h1>
+    <form [formGroup]="form" (ngSubmit)="sendForm()" class="form">
+        <input type="text" formControlName="name" placeholder="Nome">
+        <input type="text" formControlName="lastName" placeholder="Sobrenome">
+        <input type="date" formControlName="dateOfBirth" placeholder="Data de nascimento">
+        <div>   
+            <input type="number" formControlName="grade1" placeholder="Prova 1">
+            <input type="number" formControlName="grade2" placeholder="Prova 2">
+        </div>
+        <div>
+            <input type="number" formControlName="institutionalGrade" placeholder="Institucional">
+            <input type="number" formControlName="activities" placeholder="Atividades">
+        </div>
+        <button type="submit" class="btn">Adicionar</button>
+    </form>
+</div>

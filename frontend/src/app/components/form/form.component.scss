@@ -1,17 +1,67 @@
 :host {
-    width: 60%;
+    width: 55%;
     height: 100%;
     @media (max-width: 750px) {
         width: 100%;
     }
 }
 
-.form {
-    background-color: #fff;
-    width: 100%;
+.form-container {
+    background-color: #f7f9fc;
+    flex: 1;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    text-align: center;
+    color: #333333;
+
+    h1 {
+        margin-bottom: 2rem;
+    }
+
+    .form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: .4rem;
+        width: 80%;
+
+        .btn {
+            width: 100%;
+            cursor: pointer;
+            background-color: #005f99;
+            padding: .6rem;
+            border: none;
+            border-radius: 5px;
+            margin-top: .8rem;
+            color: #fff;
+
+            &:hover {
+                background-color: #004b7c;
+            }
+        }
+        div {
+            display: flex;
+            width: 100%;
+            gap: .2rem;
+        }
+
+        input {
+            padding: .5rem .7rem;
+            width: 100%;
+            border-radius: 7px;
+            border: none;
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+
+            &:focus {
+                border-color: #006199; 
+                box-shadow: 0 0 8px rgba(0, 97, 153, 0.3); 
+                outline: none; 
+            }
+        }
+    }
 }

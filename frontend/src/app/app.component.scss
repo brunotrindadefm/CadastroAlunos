@@ -1,5 +1,4 @@
 :host {
-    display: block;
     height: 100%;
     width: 100%;
     display: flex;
@@ -8,15 +7,16 @@
 }
 
 .app {
+    width: 90%;
     height: 90%;
-    width: 85%;
     padding: .4rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     background-color: #280280;
     border-radius: 10px;
     @media (max-width: 750px) {
         flex-direction: column;
+        height: auto;
     }
 }
