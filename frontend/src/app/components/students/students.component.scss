@@ -1,39 +1,142 @@
 :host {
-    width: 100%;
+    width: 90%;
     height: 100%;
 }
 
 .students-container {
-    background-color: #401;
-    height: 100%;
-    width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    padding: .2rem;
-    resize: vertical;
-
-    .students {
-        overflow-y: scroll;
-        color: #fff;
-        background-color: #006199;
-        width: 100%;
-    }
+    padding: .3rem;
+    max-height: 1000px;
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
 
     input {
-        padding: .6rem .7rem;
+        padding: .8rem .7rem;
         width: 100%;
         border-radius: 2px;
-        border: none;
-        background-color: #e0e0e0;
-        border: 1px solid #ccc;
-        margin-bottom: .2rem;
+        border: 1px solid #c4c4c4;
+        background-color: #ffffff;
+        margin-bottom: .5rem;
 
         &:focus {
-            border-color: #006199;
-            box-shadow: 0 0 8px rgba(0, 97, 153, 0.3);
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
             outline: none;
+        }
+    }
+
+    .students {
+        overflow-y: auto;
+        width: 100%;
+        padding: .1rem .5rem 0 .2rem;
+
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #007bff;
+            border-radius: 10px;
+
+            &:hover {
+                background-color: #0056b3;
+            }
+        }
+
+        .student-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: .4rem;
+            padding: 1rem;
+            border-radius: 5px;
+            background-color: #007bff;
+
+            .info {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                flex-direction: column;
+                gap: .3rem;
+
+                .btn {
+                    background-color: #007bff;
+                    color: #ffffff;
+                    font-size: .8rem;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    border: none;
+                    margin-top: .4rem   ;
+                }
+
+                .grade {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: .5rem;
+                    padding-left: .2rem;
+                    text-align: center;
+                    margin-top: .6rem;
+
+                    p {
+                        font-weight: bold;
+                        margin-bottom: .1rem;
+                    }
+                    span {
+                        margin-bottom: .4rem;
+                    }
+                }
+
+                .info-name {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: .2rem;
+                    font-weight: bold;
+                    margin-bottom: .2rem;
+                }
+
+                .info-numbers {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: .5rem;
+                    span {
+                        margin-right: .4rem;
+                    }
+                }
+            }
+
+            .edit-delete {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                gap: .4rem;
+                color: #ffffff;
+
+                .edit {
+                    cursor: pointer;
+                    transition: 0.4s ease;
+
+                    &:hover {
+                        color: #28a745;
+                    }
+                }
+
+                .delete {
+                    cursor: pointer;
+                    transition: 0.4s ease;
+
+                    &:hover {
+                        color: #dc3545;
+                    }
+                }
+            }
         }
     }
 }

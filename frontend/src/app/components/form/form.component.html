@@ -3,8 +3,8 @@
     <form [formGroup]="form" (ngSubmit)="sendForm()" class="form">
         <input type="text" formControlName="name" placeholder="Nome">
         <input type="text" formControlName="lastName" placeholder="Sobrenome">
-        <input type="date" formControlName="dateOfBirth" placeholder="Data de nascimento">
-        <div>   
+        <input type="text" formControlName="dateOfBirth" placeholder="dd/mm/yyyy">
+        <div>
             <input type="number" formControlName="grade1" placeholder="Prova 1">
             <input type="number" formControlName="grade2" placeholder="Prova 2">
         </div>

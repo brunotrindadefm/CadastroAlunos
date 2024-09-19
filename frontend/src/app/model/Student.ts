@@ -8,4 +8,5 @@ export class Student {
     institutionalGrade?: number;
     activities?: number;
     totalGrade?: number;
+    showGrade?: boolean;
 }

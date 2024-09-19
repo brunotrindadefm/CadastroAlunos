@@ -1,22 +1,8 @@
 :host {
-    height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.app {
-    width: 90%;
-    height: 90%;
-    padding: .4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #280280;
-    border-radius: 10px;
-    @media (max-width: 750px) {
-        flex-direction: column;
-        height: auto;
-    }
+    padding: 2rem;
+    flex-direction: column;
 }

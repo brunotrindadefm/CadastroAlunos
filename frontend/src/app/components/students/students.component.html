@@ -1,9 +1,39 @@
 <div class="students-container">
-    <input 
-    type="text"
-    placeholder="Pesquisar"
-    >
+    <input type="text" placeholder="Pesquisar pelo nome">
     <div class="students">
-        <div>alunoos</div>
+        <div *ngFor="let student of students" class="student-item">
+            <div class="info">
+                <div class="info-name">
+                    <p>{{ student.name }}</p>
+                    <p>{{ student.lastName }}</p>
+                </div>
+                <div class="info-numbers">
+                    <p><strong>Idade:</strong></p>
+                    <span>{{ age(student.dateOfBirth) }}</span>
+                    <p><strong>Nota total:</strong></p>
+                    <span>{{ student.totalGrade }}</span>
+                </div>
+                <button class="btn" (click)="handleShowGrade(student)">{{ student.showGrade ? 'Fechar notas' : 'Ver
+                    notas'}}</button>
+                <div class='grade' [ngClass]="{ 'show' : student.showGrade}" *ngIf="student.showGrade">
+                    <div>
+                        <p>Prova 1</p>
+                        <span>{{ student.grade1 }}</span>
+                        <p>Prova 2</p>
+                        <span>{{ student.grade2 }}</span>
+                    </div>
+                    <div>
+                        <p>Institucional</p>
+                        <span>{{ student.institutionalGrade }}</span>
+                        <p>Atividades</p>
+                        <span>{{ student.activities }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="edit-delete">
+                <mat-icon class="edit">edit</mat-icon>
+                <mat-icon class="delete" (click)="deleteStudent(student.studentId!)">delete_outline</mat-icon>
+            </div>
+        </div>
     </div>
 </div>
