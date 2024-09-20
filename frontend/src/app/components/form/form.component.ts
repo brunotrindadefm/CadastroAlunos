@@ -37,7 +37,7 @@ export class FormComponent implements OnInit {
     
     if (dateOfBirth) {
       const parsedDate = parse(dateOfBirth, 'dd/MM/yyyy', new Date());
-      formValue.dateOfBirth = formatISO(parsedDate);
+      formValue.dateOfBirth = formatISO(parsedDate);  
     }
     this.studentsService.createStudent(student).subscribe(
         result => {

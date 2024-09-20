@@ -1,39 +1,38 @@
-<div class="students-container">
-    <input type="text" placeholder="Pesquisar pelo nome">
-    <div class="students">
-        <div *ngFor="let student of students" class="student-item">
-            <div class="info">
-                <div class="info-name">
-                    <p>{{ student.name }}</p>
-                    <p>{{ student.lastName }}</p>
-                </div>
-                <div class="info-numbers">
-                    <p><strong>Idade:</strong></p>
-                    <span>{{ age(student.dateOfBirth) }}</span>
-                    <p><strong>Nota total:</strong></p>
-                    <span>{{ student.totalGrade }}</span>
-                </div>
-                <button class="btn" (click)="handleShowGrade(student)">{{ student.showGrade ? 'Fechar notas' : 'Ver
-                    notas'}}</button>
-                <div class='grade' [ngClass]="{ 'show' : student.showGrade}" *ngIf="student.showGrade">
-                    <div>
-                        <p>Prova 1</p>
-                        <span>{{ student.grade1 }}</span>
-                        <p>Prova 2</p>
-                        <span>{{ student.grade2 }}</span>
+    <div class="students-container">
+        <input type="text" placeholder="Pesquisar pelo nome" [(ngModel)]="searchByName">
+        <div class="students">
+            <div *ngFor="let student of getStudentsByName()" class="student-item">
+                <div class="info">
+                    <div class="info-name">
+                        <h3>{{ student.name }} {{student.lastName}}</h3>
                     </div>
-                    <div>
-                        <p>Institucional</p>
-                        <span>{{ student.institutionalGrade }}</span>
-                        <p>Atividades</p>
-                        <span>{{ student.activities }}</span>
+                    <div class="info-numbers">
+                        <p><strong>Idade:</strong></p>
+                        <span>{{ age(student.dateOfBirth) }}</span>
+                        <p><strong>Nota total:</strong></p>
+                        <span>{{ student.totalGrade }}</span>
+                    </div>
+                    <button class="btn" (click)="handleShowGrade(student)">{{ student.showGrade ? 'Fechar notas' : 'Ver
+                        notas'}}</button>
+                    <div class='grade' [ngClass]="{ 'show' : student.showGrade}" *ngIf="student.showGrade">
+                        <div>
+                            <h4>Prova 1</h4>
+                            <p>{{ student.grade1 }}</p>
+                            <h4>Prova 2</h4>
+                            <p>{{ student.grade2 }}</p>
+                        </div>
+                        <div>
+                            <h4>Institucional</h4>
+                            <p>{{ student.institutionalGrade }}</p>
+                            <h4>Atividades</h4>
+                            <p>{{ student.activities }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="edit-delete">
-                <mat-icon class="edit">edit</mat-icon>
-                <mat-icon class="delete" (click)="deleteStudent(student.studentId!)">delete_outline</mat-icon>
+                <div class="edit-delete" [ngClass]="student.showGrade ? 'moreHeigth' : ''">
+                    <mat-icon class="delete" (click)="deleteStudent(student.studentId!)">delete_outline</mat-icon>
+                    <mat-icon class="edit">edit</mat-icon>
+                </div>
             </div>
         </div>
     </div>
-</div>
