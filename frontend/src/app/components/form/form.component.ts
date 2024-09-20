@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Student } from '../../model/Student';
 import { StudentsService } from '../../services/students.service';
@@ -16,6 +16,8 @@ export class FormComponent implements OnInit {
   form: any;
 
   constructor(private studentsService: StudentsService) { }
+
+  @Output() formSubmitted = new EventEmitter<Student>(); 
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -42,6 +44,7 @@ export class FormComponent implements OnInit {
     this.studentsService.createStudent(student).subscribe(
         result => {
           alert('Aluno inserido com sucesso');
+          this.formSubmitted.emit(student);
           this.form.reset();
         },
         error => {

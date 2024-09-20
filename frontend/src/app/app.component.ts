@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { StudentsComponent } from './components/students/students.component';
 import { FormComponent } from './components/form/form.component';
@@ -11,5 +11,11 @@ import { FormComponent } from './components/form/form.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'CdA';
+
+    @ViewChild(StudentsComponent) studentsComponents!: StudentsComponent;
+
+    addStudent() {
+      this.studentsComponents.getAllStudents()
+    }
 }
