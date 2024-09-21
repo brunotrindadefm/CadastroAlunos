@@ -17,5 +17,5 @@ export class AppComponent {
 
     addStudent() {
       this.studentsComponents.getAllStudents()
-    }
+    };
 }

@@ -1,7 +1,8 @@
-    <div class="students-container">
-        <input type="text" placeholder="Pesquisar pelo nome" [(ngModel)]="searchByName">
-        <div class="students">
-            <div *ngFor="let student of getStudentsByName()" class="student-item">
+<div class="students-container">
+    <input type="text" placeholder="Pesquisar pelo nome" [(ngModel)]="searchByName">
+    <div class="students">
+        <div *ngFor="let student of getStudentsByName()" class="student-item">
+            <ng-container *ngIf="studentToEdit !== student">
                 <div class="info">
                     <div class="info-name">
                         <h3>{{ student.name }} {{student.lastName}}</h3>
@@ -31,8 +32,16 @@
                 </div>
                 <div class="edit-delete" [ngClass]="student.showGrade ? 'moreHeigth' : ''">
                     <mat-icon class="delete" (click)="deleteStudent(student.studentId!)">delete_outline</mat-icon>
-                    <mat-icon class="edit">edit</mat-icon>
+                    <mat-icon class="edit" (click)="handleEditingStudent(student)">edit</mat-icon>
                 </div>
-            </div>
+            </ng-container>
+            <app-edit-student
+             *ngIf="studentToEdit === student"
+             [student]="studentToEdit"
+             (save)="updateStudent($event)"
+             (cancel)="handleCancel()"
+             >
+            </app-edit-student>
         </div>
     </div>
+</div>

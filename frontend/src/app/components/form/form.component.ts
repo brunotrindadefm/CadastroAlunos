@@ -7,13 +7,13 @@ import { parse, formatISO } from 'date-fns';
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [ReactiveFormsModule, ],
+  imports: [ReactiveFormsModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss'
 })
 export class FormComponent implements OnInit {
 
-  form: any;
+  form!: FormGroup;
 
   constructor(private studentsService: StudentsService) { }
 

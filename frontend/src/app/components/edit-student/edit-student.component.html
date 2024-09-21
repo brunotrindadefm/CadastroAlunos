@@ -1,1 +1,16 @@
-<p>edit-student works!</p>
+<form class="form" [formGroup]="form" (ngSubmit)="onSave()">
+    <input type="text" placeholder="Nome" formControlName="name">
+    <input type="text" placeholder="Sobrenome" formControlName="lastName">
+    <input type="text" placeholder="dd/mm/aaaa" formControlName="dateOfBirth">
+    <div class="numbers">
+        <input type="number" placeholder="Prova 1" formControlName="grade1">
+        <input type="number" placeholder="Prova 2" formControlName="grade2">
+        <input type="number" placeholder="Institucional" formControlName="institutionalGrade">
+        <input type="number" placeholder="Atividades" formControlName="activities">
+    </div>
+
+    <div class="btn-container">
+        <button class="save" type="submit">Salvar</button>
+        <button class="cancel" type="button" (click)="onCancel()">Cancelar</button>
+    </div>
+</form>
