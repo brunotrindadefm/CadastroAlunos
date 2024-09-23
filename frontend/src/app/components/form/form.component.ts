@@ -17,7 +17,7 @@ export class FormComponent implements OnInit {
 
   constructor(private studentsService: StudentsService) { }
 
-  @Output() formSubmitted = new EventEmitter<Student>(); 
+  @Output() formSubmitted = new EventEmitter<Student>();
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -36,20 +36,30 @@ export class FormComponent implements OnInit {
     const student: Student = formValue;
 
     const dateOfBirth = formValue.dateOfBirth;
-    
+
     if (dateOfBirth) {
       const parsedDate = parse(dateOfBirth, 'dd/MM/yyyy', new Date());
-      formValue.dateOfBirth = formatISO(parsedDate);  
+      formValue.dateOfBirth = formatISO(parsedDate);
     }
     this.studentsService.createStudent(student).subscribe(
-        result => {
-          alert('Aluno inserido com sucesso');
-          this.formSubmitted.emit(student);
-          this.form.reset();
-        },
-        error => {
-          console.error('Erro ao inserir aluno:', error);
-          alert('Erro ao inserir aluno');
-        })
+      result => {
+        alert('Aluno inserido com sucesso');
+        this.formSubmitted.emit(student);
+        this.form.reset();
+      },
+      error => {
+        console.error('Erro ao inserir aluno:', error);
+        const errorMessages = error.error.errors; // Acesse o objeto de erros
+        let message = 'Erro desconhecido';
+
+        if (errorMessages) {
+          // Concatena as mensagens de erro em uma string
+          message = Object.keys(errorMessages)
+            .map(key => `${key}: ${errorMessages[key].join(', ')}`)
+            .join('\n');
+        }
+
+        alert(message);
+      })
   };
 }

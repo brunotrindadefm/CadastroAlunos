@@ -1,11 +1,13 @@
-// Definição de um controlador no ASP.NET Core  
-
+// Definição de um controlador no ASP.NET Core
 using Microsoft.AspNetCore.Mvc;
-using backend.Context;
-using backend.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Console;
+
+using backend.Context;
+using backend.Models;
+using backend.Utils;
 
 namespace backend.Controllers
 {
@@ -30,12 +32,17 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> GetAllStudents()
         {
+
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
             return await _context.Students.ToListAsync();
         }
 
         [HttpGet("{studentId}")]
         public async Task<ActionResult<Student>> GetById(int studentId)
         {
+            if (!ModelState.IsValid) return BadRequest();
+
             Student student = await _context.Students.FindAsync(studentId);
 
             if (student == null) return NotFound();
@@ -46,6 +53,12 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Student>> CreateStudent(Student student)
         {
+
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            student.Name = StrFormatter.FormatStr(student.Name);
+            student.LastName = StrFormatter.FormatStr(student.LastName);
+
             await _context.Students.AddAsync(student);
             await _context.SaveChangesAsync();
 
@@ -55,6 +68,11 @@ namespace backend.Controllers
         [HttpPut]
         public async Task<ActionResult> EditStudent(Student student)
         {
+            if (!ModelState.IsValid) return BadRequest();
+
+            student.Name = StrFormatter.FormatStr(student.Name);
+            student.LastName = StrFormatter.FormatStr(student.LastName);
+
             _context.Students.Update(student);
             await _context.SaveChangesAsync();
 
@@ -64,6 +82,8 @@ namespace backend.Controllers
         [HttpDelete("{studentId}")]
         public async Task<ActionResult> DeleteStudent(int studentId)
         {
+            if (!ModelState.IsValid) return BadRequest();
+
             Student student = await _context.Students.FindAsync(studentId);
             if (student == null) return NotFound();
 

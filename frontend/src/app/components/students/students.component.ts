@@ -60,7 +60,22 @@ export class StudentsComponent implements OnInit {
     this.studentsService.updateStudent(student).subscribe(() => {
       this.students = this.students.map(st => st.studentId === student.studentId ? student : st);
       this.studentToEdit = null;
-    })
+    },
+      error => {
+        console.error('Erro ao inserir aluno:', error);
+        const errorMessages = error.error.errors; // Acesse o objeto de erros
+        let message = 'Erro desconhecido';
+
+        if (errorMessages) {
+          // Concatena as mensagens de erro em uma string
+          message = Object.keys(errorMessages)
+            .map(key => `${key}: ${errorMessages[key].join(', ')}`)
+            .join('\n');
+        }
+
+        alert(message);
+      })
+
   };
 
   handleEditingStudent(student: Student): void {
