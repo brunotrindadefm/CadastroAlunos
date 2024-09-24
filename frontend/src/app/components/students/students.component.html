@@ -1,5 +1,5 @@
 <div class="students-container">
-    <input type="text" placeholder="Pesquisar pelo nome" [(ngModel)]="searchByName">
+    <input type="text" placeholder="Pesquisar pelo nome ou sobrenome" [(ngModel)]="searchByName">
     <div class="students">
         <div *ngFor="let student of getStudentsByName()" class="student-item">
             <ng-container *ngIf="studentToEdit !== student">

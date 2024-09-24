@@ -6,10 +6,10 @@ namespace backend.Models
     {
         public int StudentId { get; set; }
 
-        [NameValidation(2, 50, "Nome")]
+        [NameValidation(2, 30, "Nome")]
         public string Name { get; set; }
 
-        [NameValidation(2, 50, "Sobrenome")]
+        [NameValidation(2, 30, "Sobrenome")]
         public string LastName { get; set; }
 
         [DateValidation("01/01/1910")]

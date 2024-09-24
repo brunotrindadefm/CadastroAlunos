@@ -14,6 +14,7 @@
     align-items: center;
     flex-direction: column;
     text-align: center;
+    padding: .6rem 0 .8rem 0;
     color: #333333;
     border-radius: 10px;
     margin-bottom: 1.2rem;
@@ -30,8 +31,8 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        gap: .4rem;
-        width: 85%;
+        gap: .45rem;
+        width: 87%;
 
         .btn {
             width: 100%;

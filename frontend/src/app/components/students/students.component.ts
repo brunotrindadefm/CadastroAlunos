@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { StudentsService } from '../../services/students.service';
 import { Student } from '../../model/Student';
 import { CommonModule } from '@angular/common';
@@ -6,20 +6,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { differenceInYears, parseISO } from 'date-fns';
 import { FormsModule } from '@angular/forms';
 import { EditStudentComponent } from '../edit-student/edit-student.component';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-students',
   standalone: true,
   imports: [CommonModule, MatIconModule, FormsModule, EditStudentComponent],
   templateUrl: './students.component.html',
-  styleUrl: './students.component.scss'
+  styleUrls: ['./students.component.scss']
 })
 export class StudentsComponent implements OnInit {
 
   students: Student[] = [];
   studentToEdit: Student | null = null;
-
   searchByName: string = '';
+
+  private snackbarService = inject(SnackbarService);
 
   constructor(private studentsService: StudentsService) { }
 
@@ -28,12 +30,10 @@ export class StudentsComponent implements OnInit {
   }
 
   age(isoDate?: string): number {
-    const parsedDate = parseISO(isoDate!);
-    const currentDate = new Date();
-
-    const age = differenceInYears(currentDate, parsedDate);
-    return age;
-  };
+    if (!isoDate) return 0; 
+    const parsedDate = parseISO(isoDate);
+    return differenceInYears(new Date(), parsedDate);
+  }
 
   handleShowGrade(student: Student): void {
     student.showGrade = !student.showGrade;
@@ -44,7 +44,7 @@ export class StudentsComponent implements OnInit {
       this.students = data.map(student => ({
         ...student,
         showGrade: false
-      }))
+      }));
     });
   }
 
@@ -52,6 +52,7 @@ export class StudentsComponent implements OnInit {
     if (confirm('Tem certeza de que deseja deletar este aluno?')) {
       this.studentsService.deleteStudent(studentId).subscribe(() => {
         this.students = this.students.filter(student => student.studentId !== studentId);
+        this.snackbarService.showMessage('Aluno deletado com sucesso', 'Fechar', 'success');
       });
     }
   }
@@ -60,36 +61,42 @@ export class StudentsComponent implements OnInit {
     this.studentsService.updateStudent(student).subscribe(() => {
       this.students = this.students.map(st => st.studentId === student.studentId ? student : st);
       this.studentToEdit = null;
-    },  
-      error => {
-        console.error('Erro ao inserir aluno:', error);
-        const errorMessages = error.error.errors; // Acesse o objeto de erros
-        let message = 'Erro desconhecido';
-
-        if (errorMessages) {
-          // Concatena as mensagens de erro em uma string
-          message = Object.keys(errorMessages)
-            .map(key => `${key}: ${errorMessages[key].join(', ')}`)
-            .join('\n');
-        }
-
-        alert(message);
-      })
-
-  };
+      this.snackbarService.showMessage('Aluno editado com sucesso', 'Fechar', 'success');
+    }, error => {
+      this.handleError(error);
+    });
+  }
 
   handleEditingStudent(student: Student): void {
     this.studentToEdit = student;
-  };
+  }
 
   handleCancel(): void {
     this.studentToEdit = null;
-  };
+  }
 
-  getStudentsByName() {
+  getStudentsByName(): Student[] {
     return this.students.filter(student =>
-      student.name?.toLowerCase().includes(this.searchByName.toLowerCase())
+      (student.name?.toLowerCase().includes(this.searchByName.toLowerCase())) ||
+      (student.lastName?.toLowerCase().includes(this.searchByName.toLowerCase()))
     );
   }
 
+  private handleError(error: any): void {
+    console.error('Erro ao inserir aluno:', error);
+    const errorMessages = error.error?.errors;
+
+    if (errorMessages) {
+      // Exibe uma snackbar para mensagem de erro
+      Object.keys(errorMessages).forEach(key => {
+        const messages = errorMessages[key];
+        messages.map((msg: any) => {
+          this.snackbarService.showMessage(msg, 'Fechar', 'error');
+        });
+      });
+    } else {
+      // Se não houver mensagens de erro específicas, exibe uma mensagem padrão
+      this.snackbarService.showMessage('Erro desconhecido', 'Fechar', 'error');
+    }
+  }
 }

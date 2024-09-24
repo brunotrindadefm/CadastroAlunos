@@ -1,8 +1,9 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, inject, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Student } from '../../model/Student';
 import { StudentsService } from '../../services/students.service';
 import { parse, formatISO } from 'date-fns';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-form',
@@ -14,6 +15,7 @@ import { parse, formatISO } from 'date-fns';
 export class FormComponent implements OnInit {
 
   form!: FormGroup;
+  private snackbarService = inject(SnackbarService);
 
   constructor(private studentsService: StudentsService) { }
 
@@ -43,23 +45,31 @@ export class FormComponent implements OnInit {
     }
     this.studentsService.createStudent(student).subscribe(
       result => {
-        alert('Aluno inserido com sucesso');
         this.formSubmitted.emit(student);
+        this.snackbarService.showMessage('Aluno inserido com sucesso!', 'Fechar', 'success');
         this.form.reset();
       },
       error => {
-        console.error('Erro ao inserir aluno:', error);
-        const errorMessages = error.error.errors; // Acesse o objeto de erros
-        let message = 'Erro desconhecido';
-
-        if (errorMessages) {
-          // Concatena as mensagens de erro em uma string
-          message = Object.keys(errorMessages)
-            .map(key => `${key}: ${errorMessages[key].join(', ')}`)
-            .join('\n');
-        }
-
-        alert(message);
-      })
+        this.handleError(error)
+      }
+    )
   };
+
+  private handleError(error: any): void {
+    console.error('Erro ao inserir aluno:', error);
+    const errorMessages = error.error?.errors;
+
+    if (errorMessages) {
+      // Exibe uma snackbar para mensagem de erro
+      Object.keys(errorMessages).forEach(key => {
+        const messages = errorMessages[key];
+        messages.map((msg: any) => {
+          this.snackbarService.showMessage(msg, 'Fechar', 'error');
+        });
+      });
+    } else {
+      // Se não houver mensagens de erro específicas, exibe uma mensagem padrão
+      this.snackbarService.showMessage('Erro desconhecido', 'Fechar', 'error');
+    }
+  }
 }
