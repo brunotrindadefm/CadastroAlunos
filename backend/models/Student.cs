@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using backend.Validation;
 
 namespace backend.Models

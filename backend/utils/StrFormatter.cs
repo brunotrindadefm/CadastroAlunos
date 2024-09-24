@@ -1,5 +1,3 @@
-using System;
-
 namespace backend.Utils
 {
     public static class StrFormatter
