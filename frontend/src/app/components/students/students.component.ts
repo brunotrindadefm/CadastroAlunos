@@ -7,11 +7,12 @@ import { differenceInYears, parseISO } from 'date-fns';
 import { FormsModule } from '@angular/forms';
 import { EditStudentComponent } from '../edit-student/edit-student.component';
 import { SnackbarService } from '../../services/snackbar.service';
+import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-students',
   standalone: true,
-  imports: [CommonModule, MatIconModule, FormsModule, EditStudentComponent],
+  imports: [CommonModule, MatIconModule, FormsModule, EditStudentComponent, ConfirmModalComponent],
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.scss']
 })
@@ -20,6 +21,9 @@ export class StudentsComponent implements OnInit {
   students: Student[] = [];
   studentToEdit: Student | null = null;
   searchByName: string = '';
+  showModal: boolean = false;
+  studentIdToDelete: number | null = null;
+  studentNameToDelete: string | null = null;
 
   private snackbarService = inject(SnackbarService);
 
@@ -30,7 +34,7 @@ export class StudentsComponent implements OnInit {
   }
 
   age(isoDate?: string): number {
-    if (!isoDate) return 0; 
+    if (!isoDate) return 0;
     const parsedDate = parseISO(isoDate);
     return differenceInYears(new Date(), parsedDate);
   }
@@ -48,14 +52,25 @@ export class StudentsComponent implements OnInit {
     });
   }
 
-  deleteStudent(studentId: number): void {
-    if (confirm('Tem certeza de que deseja deletar este aluno?')) {
-      this.studentsService.deleteStudent(studentId).subscribe(() => {
-        this.students = this.students.filter(student => student.studentId !== studentId);
-        this.snackbarService.showMessage('Aluno deletado com sucesso', 'Fechar', 'success');
-      });
+  handleShowModal(student: Student): void {
+    this.studentNameToDelete = student.name!;
+    this.studentIdToDelete = student.studentId!;
+    this.showModal = true;
+  };
+
+  handleConfirmModal(confirm: boolean): void {
+    this.showModal = false;
+    if (confirm && this.studentIdToDelete !== null) {
+      this.deleteStudent(this.studentIdToDelete);
     }
   }
+
+  deleteStudent(studentId: number): void {
+    this.studentsService.deleteStudent(studentId).subscribe(() => {
+      this.students = this.students.filter(student => student.studentId !== studentId);
+      this.snackbarService.showMessage('Aluno deletado com sucesso', 'Fechar', 'success');
+    });
+  };
 
   updateStudent(student: Student): void {
     this.studentsService.updateStudent(student).subscribe(() => {

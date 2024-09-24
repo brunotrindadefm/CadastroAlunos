@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="edit-delete" [ngClass]="student.showGrade ? 'moreHeigth' : ''">
-                    <mat-icon class="delete" (click)="deleteStudent(student.studentId!)">delete_outline</mat-icon>
+                    <mat-icon class="delete" (click)="handleShowModal(student)">delete_outline</mat-icon>
                     <mat-icon class="edit" (click)="handleEditingStudent(student)">edit</mat-icon>
                 </div>
             </ng-container>
@@ -45,3 +45,10 @@
         </div>
     </div>
 </div>
+
+<app-confirm-modal
+ *ngIf="showModal"
+ (confirm)="handleConfirmModal($event)"
+ [studentName]="studentNameToDelete"
+ >
+</app-confirm-modal>
