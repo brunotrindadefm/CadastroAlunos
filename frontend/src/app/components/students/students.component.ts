@@ -27,21 +27,21 @@ export class StudentsComponent implements OnInit {
 
   private snackbarService = inject(SnackbarService);
 
-  constructor(private studentsService: StudentsService) { }
+  constructor(private studentsService: StudentsService) { };
 
   ngOnInit(): void {
     this.getAllStudents();
-  }
+  };
 
   age(isoDate?: string): number {
     if (!isoDate) return 0;
     const parsedDate = parseISO(isoDate);
     return differenceInYears(new Date(), parsedDate);
-  }
+  };
 
   handleShowGrade(student: Student): void {
     student.showGrade = !student.showGrade;
-  }
+  };
 
   getAllStudents(): void {
     this.studentsService.getAllStudents().subscribe(data => {
@@ -50,7 +50,7 @@ export class StudentsComponent implements OnInit {
         showGrade: false
       }));
     });
-  }
+  };
 
   handleShowModal(student: Student): void {
     this.studentNameToDelete = student.name!;
@@ -62,8 +62,8 @@ export class StudentsComponent implements OnInit {
     this.showModal = false;
     if (confirm && this.studentIdToDelete !== null) {
       this.deleteStudent(this.studentIdToDelete);
-    }
-  }
+    };
+  };
 
   deleteStudent(studentId: number): void {
     this.studentsService.deleteStudent(studentId).subscribe(() => {
@@ -80,15 +80,15 @@ export class StudentsComponent implements OnInit {
     }, error => {
       this.handleError(error);
     });
-  }
+  };
 
   handleEditingStudent(student: Student): void {
     this.studentToEdit = student;
-  }
+  };
 
   handleCancel(): void {
     this.studentToEdit = null;
-  }
+  };
 
   getStudentsByName(): Student[] {
     return this.students.filter(student =>

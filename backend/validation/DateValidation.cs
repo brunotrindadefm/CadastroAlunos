@@ -6,7 +6,7 @@ namespace backend.Validation
     {
         private readonly DateTime _minDate;
 
-        public DateValidation( string minDate)
+        public DateValidation(string minDate)
         {
             _minDate = DateTime.Parse(minDate);
 
